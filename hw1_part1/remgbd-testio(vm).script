@@ -1,0 +1,39 @@
+tuser@tutor-vserver:~/testelf$ gdb testio.lnx
+GNU gdb (GDB) 7.0.1-debian
+Copyright (C) 2009 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "i486-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+Reading symbols from /home/tuser/testelf/testio.lnx...done.
+(gdb) tar rem /dev/ttyS0
+Remote debugging using /dev/ttyS0
+0x00100100 in ?? ()
+(gdb) set $eip = 0x100100
+(gdb) b 43
+Breakpoint 1 at 0x1003da: file testio.c, line 43.
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at testio.c:43
+43      testio.c: No such file or directory.
+        in testio.c
+(gdb) n
+44      in testio.c
+(gdb) c
+Continuing.
+
+Program received signal SIGTRAP, Trace/breakpoint trap.
+startupc () at startup.c:4
+4       startup.c: No such file or directory.
+        in startup.c
+(gdb) q
+A debugging session is active.
+
+        Inferior 1 [Remote target] will be killed.
+
+Quit anyway? (y or n) y
+tuser@tutor-vserver:~/testelf$

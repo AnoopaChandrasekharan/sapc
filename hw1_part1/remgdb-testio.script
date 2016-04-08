@@ -1,0 +1,98 @@
+/*****************************************************************************************
+ 
+* Name :Anoopa Chandrasekharan Jayasree
+* Date : 02/17/2016
+* File name : remotegdb-testio.script 
+
+*****************************************************************************************/
+
+-----------mtip window--------------------------------------------------------------------
+
+blade57(7)% mtip -b 6 -f testio.lnx
+For command help, type ~?
+For help on args, rerun without args
+Code starts at 0x100100
+Using board # 6
+
+Tutor> ~downloading testio.lnx
+........Done.
+
+Download done, setting EIP to 100100.
+Tutor> gdb
+Setting gdb dev to COM1, starting gdb (CTRL-C to abort).
+
+
+
+------------GDB window---------------------------------------------------------------------
+blade57(10)% i386-gdb testio.lnx
+GDB is free software and you are welcome to distribute copies of it
+ under certain conditions; type "show copying" to see the conditions.
+There is absolutely no warranty for GDB; type "show warranty" for details.
+GDB 4.15.1 (sparc-sun-sunos4.1.3 --target i386-linuxaout),
+Copyright 1995 Free Software Foundation, Inc...
+(gdb) tar rem /dev/remgdb6
+Remote debugging using /dev/remgdb6
+0x100100 in /groups/ulab/pcdev/lib/startup0.opc ()
+(gdb) b 30
+Breakpoint 1 at 0x100374: file testio.c, line 30.
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at testio.c:30
+30        lib_console_dev = sys_get_console_dev();  /* SAPC support lib fn */
+(gdb) b 43
+Breakpoint 2 at 0x1003da: file testio.c, line 43.
+(gdb) c
+Continuing.
+Running with device TTY1
+
+Breakpoint 2, main () at testio.c:43
+43        kprintf("\nTrying simple write(4 chars)...\n");
+(gdb) n
+
+Trying simple write(4 chars)...
+44        got = write(ldev,"hi!\n",4);
+(gdb) n
+45        kprintf("write of 4 returned %d\n",got);
+(gdb) c
+Continuing.
+write of 4 returned 4
+<doing delay>
+Trying longer write (9 chars)
+write of 9 returned 9
+<doing delay>
+
+Trying write of 80-char string...
+
+write returned 80
+<doing delay>
+
+Type 10 chars input to test typeahead while looping for delay...
+<doing delay>
+
+Got 0 chars into buf. Trying write of buf...
+
+Trying another 10 chars read right away...
+
+Got 0 chars on second read
+nothing in buffer
+
+
+---Type <return> to continue, or q <return> to quit---
+Now turning echo off--
+
+Type 20 chars input, note lack of echoes...
+<doing delay>
+
+Trying write of buf...
+
+Asked for 20 characters; got 0
+
+Program received signal SIGTRAP, Trace/breakpoint trap.
+startupc () at startup.c:4
+startup.c:4: No such file or directory.
+(gdb) q
+The program is running.  Quit anyway (and kill it)? (y or n)
+
+
+
